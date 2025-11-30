@@ -8,8 +8,3 @@ export const pool = new Pool({
   database: process.env.DB_NAME || 'taskflow',
   port: 5432
 });
-
-// Test connection immediately
-pool.connect()
-  .then(() => console.log("✅ Postgres connected successfully"))
-  .catch(err => console.error("❌ DB connection error:", err));
