@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: taskflow-backend
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASS=password
+      - DB_NAME=taskflow
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: taskflow-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: taskflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - taskdata:/var/lib/postgresql/data
+
+volumes:
+  taskdata:
